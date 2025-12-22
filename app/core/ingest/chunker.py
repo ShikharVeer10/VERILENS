@@ -1,6 +1,6 @@
 from typing import List
-from app.schemas.document import Document,DocumentChunk
-from app.core.config import settings
+from app.core.schemas.document import Document,DocumentChunk
+from app.core.core.config import settings
 
 def chunk_document(document:Document) ->List[DocumentChunk]:
     chunks=[]

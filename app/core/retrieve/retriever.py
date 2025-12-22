@@ -1,6 +1,6 @@
 from app.core.retrieve.embedder import embed_text #Converts raw text to embedded text
 from app.core.retrieve.vector_store import VectorStore 
-from app.core.config import settings #It takes TOP_K as to see how many chunks are retrieved
+from app.core.core.config import settings #It takes TOP_K as to see how many chunks are retrieved
 
 def retrieve_relevant_chunks(
         query:str, #The user question
