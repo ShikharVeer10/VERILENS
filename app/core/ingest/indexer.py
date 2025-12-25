@@ -1,30 +1,28 @@
-from app.core.ingest.loader import load_document
-from app.core.ingest.chunker import chunk_document
-from app.core.retrieve.embedder import embed_text
-from app.core.retrieve.vector_store import VectorStore
+# app/core/ingest/indexer.py
+from app.core.retrieve.embedder import embed_texts_batch, add_to_corpus, fit_vectorizer
 from app.core.schemas.embedding import EmbeddedChunk
 
 
-def build_index() -> VectorStore:
+def index_chunks(chunks, vector_store):
     """
-    Builds the vector index by:
-    1. Loading documents
-    2. Chunking documents
-    3. Embedding chunks
-    4. Storing embeddings in a VectorStore
+    Takes DocumentChunk objects, generates embeddings,
+    and stores them in the vector store as EmbeddedChunk objects.
     """
-    vector_store = VectorStore()
-    documents = load_document()
+    # Collect all texts for batch processing
+    texts = [chunk.text for chunk in chunks]
+    
+    for text in texts:
+        add_to_corpus(text)
+    fit_vectorizer()
 
-    for document in documents:
-        chunks = chunk_document(document)
-        for chunk in chunks:
-            embedding = embed_text(chunk.text)
-            embedded_chunk = EmbeddedChunk(
-                chunk_id=chunk.chunk_id,
-                text=chunk.text,
-                source=chunk.source,
-                embedding=embedding
-            )
-            vector_store.add(embedded_chunk)
-    return vector_store
+    # Generate all embeddings in one batch (much faster)
+    embeddings = embed_texts_batch(texts)
+
+    for chunk, embedding in zip(chunks, embeddings):
+        embedded_chunk = EmbeddedChunk(
+            chunk_id=chunk.chunk_id,
+            text=chunk.text,
+            source=chunk.source,
+            embedding=embedding
+        )
+        vector_store.add(embedded_chunk)

@@ -2,9 +2,6 @@ from pydantic import BaseModel
 from typing import List
 
 class Evidence(BaseModel):
-    """
-    Docstring for Evidence
-    """
     source:str
     chunk_id:int
     text:str
