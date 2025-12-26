@@ -1,9 +1,3 @@
-"""
-Answer Verification Module
-
-This module provides functionality to verify that generated answers
-are properly grounded in the source documents.
-"""
 
 from typing import List, Optional
 from openai import OpenAI
@@ -70,7 +64,7 @@ class AnswerVerifier:
         if not evidence_chunks:
             return VerificationResult(
                 document_type="Unknown",
-                overall_Status="NOT_VERIFIED",
+                overall_status="NOT_VERIFIED",
                 issues=[
                     VerificationIssue(
                         check="Evidence availability",
@@ -125,7 +119,7 @@ Verify if the answer is properly supported by the evidence.
             
             return VerificationResult(
                 document_type=result_data.get("document_type", "Unknown"),
-                overall_Status=result_data.get("overall_status", "NOT_VERIFIED"),
+                overall_status=result_data.get("overall_status", "NOT_VERIFIED"),
                 issues=issues,
                 confidence_score=float(result_data.get("confidence_score", 0.0))
             )
@@ -133,7 +127,7 @@ Verify if the answer is properly supported by the evidence.
         except Exception as e:
             return VerificationResult(
                 document_type="Unknown",
-                overall_Status="ERROR",
+                overall_status="ERROR",
                 issues=[
                     VerificationIssue(
                         check="Verification process",

@@ -8,7 +8,6 @@ def index_chunks(chunks, vector_store):
     Takes DocumentChunk objects, generates embeddings,
     and stores them in the vector store as EmbeddedChunk objects.
     """
-    # Collect all texts for batch processing
     texts = [chunk.text for chunk in chunks]
     
     for text in texts:
