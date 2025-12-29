@@ -16,11 +16,10 @@ import sys
 
 
 def print_banner():
-    """Print the application banner."""
     print("\n" + "=" * 60)
     print("VERILENS - Document Q&A with Citations")
     print("=" * 60)
-    print(" Powered by RAG (Retrieval-Augmented Generation)")
+    print(" Powered by RAG ")
     print("-" * 60)
 
 
@@ -52,7 +51,7 @@ def process_document(pdf_path: str) -> tuple:
     print(" Done!", flush=True)
     
     if not text.strip():
-        print("Warning: No text could be extracted from the PDF.")
+        print("No text could be extracted from the PDF.")
         return None, None
     
     print(f"Extracted {len(text)} characters", flush=True)

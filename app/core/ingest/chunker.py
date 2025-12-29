@@ -33,6 +33,10 @@ def chunk_document(document: Document) -> List[DocumentChunk]:
 
         chunk_id += 1
 
+        # Move to next chunk position
+        # If we've reached the end, break to avoid infinite loop
+        if end == text_length:
+            break
         start = end - overlap
 
     return chunks
